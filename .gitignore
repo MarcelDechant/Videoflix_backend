@@ -1,0 +1,51 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+env/
+venv/
+*.env
+*.log
+
+# Django
+*.db
+*.sqlite3
+*.bak
+*.log
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Coverage reports
+coverage.xml
+*.cover
+*.hypothesis/
+.tox/
+.nox/
+.coverage
+*.coveragerc
+nosetests.xml
+test_*.xml
+
+# IDE config files
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Django migrations
+/migrations/
+
+# Static files
+/static/
+
+# Media files (optional, falls du die Medien speicherst)
+media/
+
+# Other system-specific files
+*.swp
