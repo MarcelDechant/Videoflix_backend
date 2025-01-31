@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-9g(ag%6g7vssg%ddqb#f$g0+a#_7&##sj6zcta(=-1!1pg2lg5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:4200']
+ALLOWED_HOSTS = ['http://localhost:4200','127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -37,14 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
+    "rest_framework_simplejwt",
     'accounts_app',
     'django_rq', 
     'import_export',
+    "content",
+    'django_filters',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,11 +137,55 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
+        'HOST': '172.29.64.1',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
+        'PASSWORD': 'foobared', 
+        'DEFAULT_TIMEOUT': 600,
     },
+    
 }
+
+
+RQ_SHOW_ADMIN_LINK = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://localhost:6379/1",
+        "OPTIONS": {
+            "PASSWORD":'foobared' ,
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+        "KEY_PREFIX": "videoflix",
+    }
+}
+
+CACHE_TTL = 30 * 60
+
+# Django Debug Tool
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+# media folder for videos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

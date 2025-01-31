@@ -6,6 +6,7 @@ env/
 venv/
 *.env
 *.log
+env_lin/
 
 # Django
 *.db
@@ -46,6 +47,7 @@ test_*.xml
 
 # Media files (optional, falls du die Medien speicherst)
 media/
+data/
 
 # Other system-specific files
 *.swp
