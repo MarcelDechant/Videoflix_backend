@@ -73,7 +73,7 @@ To run this backend locally, make sure you have the following tools installed:
    RQ_HOST=172.29.64.1                             # Redis server host
    RQ_PORT=6379                                    # Redis server port
    RQ_DB=0                                         # Redis database index
-   RQ_PASSWORD=foobared                            # Password for Redis (if required)
+   RQ_PASSWORD=password                           # Password for Redis (if required)
    RQ_DEFAULT_TIMEOUT=600                          # Default task timeout (seconds)
 
    # CORS settings
@@ -82,7 +82,7 @@ To run this backend locally, make sure you have the following tools installed:
    # Cache settings
    CACHE_BACKEND=django_redis.cache.RedisCache     # Cache backend
    CACHE_LOCATION=redis://localhost:6379/1         # Redis cache location
-   CACHE_PASSWORD=foobared                         # Cache password (if applicable)
+   CACHE_PASSWORD=password                         # Cache password (if applicable)
    CACHE_KEY_PREFIX=videoflix                      # Prefix for cache keys
    CACHE_TTL=1800                                  # Cache time-to-live (seconds)
 
