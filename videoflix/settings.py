@@ -81,13 +81,26 @@ WSGI_APPLICATION = 'videoflix.wsgi.application'
 
 AUTH_USER_MODEL = "accounts_app.CustomUser"
 
-# Database
+# Database sqlite3
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('DATABASE_ENGINE'),
+#         'NAME': BASE_DIR / os.getenv('DATABASE_NAME'),
+#     }
+# }
+
+# Database PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE'),
-        'NAME': BASE_DIR / os.getenv('DATABASE_NAME'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_postgres_NAME'),
+        'USER': os.getenv('DATABASE_postgres_USER'),
+        'PASSWORD': os.getenv('DATABASE_postgres_PASSWORD'),
+        'HOST': os.getenv('DATABASE_postgres_HOST'),
+        'PORT': os.getenv('DATABASE_postgres_PORT'),
     }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
