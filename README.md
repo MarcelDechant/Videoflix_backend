@@ -63,8 +63,8 @@ To run this backend locally, make sure you have the following tools installed:
    DATABASE_NAME=db.sqlite3                        # SQLite database file
 
    # PostgreSQL settings (if using PostgreSQL instead of SQLite)
-   DATABASE_postgres_NAME=videoflix                # Name of the PostgreSQL database
-   DATABASE_postgres_USER=marcel                   # PostgreSQL username
+   DATABASE_postgres_NAME= videoflix                # Name of the PostgreSQL database
+   DATABASE_postgres_USER= Username                # PostgreSQL username
    DATABASE_postgres_PASSWORD=your-secure-password # PostgreSQL password
    DATABASE_postgres_HOST=localhost                # PostgreSQL host
    DATABASE_postgres_PORT=5432                     # Default PostgreSQL port
