@@ -123,32 +123,32 @@ To run this backend locally, make sure you have the following tools installed:
     ```bash
     redis-server
 
-10. **RQ Worker unter WSL starten**
+10. **Start RQ Worker under WSL**
 
-Falls du Windows verwendest, musst du den RQ Worker unter WSL (Windows Subsystem for Linux) ausführen. Zusätzlich musst du die Abhängigkeiten aus der `requirements_lin.txt` installieren.
+If you are using Windows, you need to run the RQ Worker on WSL (Windows Subsystem for Linux). Additionally you have to install the dependencies from the `requirements_lin.txt`.
 
-1. Installiere die Abhängigkeiten in WSL:
+1. Install the dependencies in WSL:
    ```bash
    pip install -r requirements_lin.txt
 
-2. Starte den RQ Worker unter WSL
+2. Start the RQ Worker under WSL
     ```bash
     python manage.py rqworker
 
-11. **Backend-Server starten**
+11. **Start backend server**
 
-    Nachdem alle vorherigen Schritte abgeschlossen sind, kannst du nun den Backend-Server starten. Verwende dazu den folgenden Befehl:
+    After all previous steps are completed, you can now start the backend server. To do this, use the following command:
 
     ```bash
     python manage.py runserver
 
-12. **Videos über das Admin-Panel hinzufügen**
+12. **Add videos via admin panel**
 
-    Um Videos hinzuzufügen, musst du dich zunächst über das Admin-Panel anmelden.
+    To add videos, you must first log in via the admin panel.
 
-    1. Stelle sicher, dass der Backend-Server läuft (`python manage.py runserver`).
-    2. Gehe im Browser zu `http://127.0.0.1:8000/admin`.
-    3. Melde dich mit dem Superuser-Konto an, das du zuvor erstellt hast.
-    4. Im Admin-Panel kannst du nun Videos über das Modell „Video“ hinzufügen. Klicke dazu auf „Videos“ und füge deine Videos hinzu.
+    1. Make sure the backend server is running (`python manage.py runserver`).
+    2. Go to `http://127.0.0.1:8000/admin` in the browser.
+    3. Sign in with the superuser account you created previously.
+    4. In the admin panel you can now add videos using the “Video” model. To do this, click on “Videos” and add your videos.
 
-    Jetzt kannst du deine Videos verwalten und für die Benutzer verfügbar machen!
+   Now you can manage your videos and make them available to users!
