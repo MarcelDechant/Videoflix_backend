@@ -123,10 +123,32 @@ To run this backend locally, make sure you have the following tools installed:
     ```bash
     redis-server
 
-10. **Start the RQ Worker:**
-    RQWorker is used for background tasks (like video encoding). In one terminal, start the worker:
+10. **RQ Worker unter WSL starten**
+
+Falls du Windows verwendest, musst du den RQ Worker unter WSL (Windows Subsystem for Linux) ausführen. Zusätzlich musst du die Abhängigkeiten aus der `requirements_lin.txt` installieren.
+
+1. Installiere die Abhängigkeiten in WSL:
+   ```bash
+   pip install -r requirements_lin.txt
+
+2. Starte den RQ Worker unter WSL
     ```bash
     python manage.py rqworker
 
+11. **Backend-Server starten**
 
+    Nachdem alle vorherigen Schritte abgeschlossen sind, kannst du nun den Backend-Server starten. Verwende dazu den folgenden Befehl:
 
+    ```bash
+    python manage.py runserver
+
+12. **Videos über das Admin-Panel hinzufügen**
+
+    Um Videos hinzuzufügen, musst du dich zunächst über das Admin-Panel anmelden.
+
+    1. Stelle sicher, dass der Backend-Server läuft (`python manage.py runserver`).
+    2. Gehe im Browser zu `http://127.0.0.1:8000/admin`.
+    3. Melde dich mit dem Superuser-Konto an, das du zuvor erstellt hast.
+    4. Im Admin-Panel kannst du nun Videos über das Modell „Video“ hinzufügen. Klicke dazu auf „Videos“ und füge deine Videos hinzu.
+
+    Jetzt kannst du deine Videos verwalten und für die Benutzer verfügbar machen!
