@@ -28,7 +28,7 @@ def send_activation_email(instance):
     email = EmailMultiAlternatives(
         subject='Confirm your email',
         body=text_content,
-        from_email='mail@dechantMarcel.com',# emailadresse der domain (gerade platzhalter)
+        from_email='marceldechant@googlemail.com',
         to=[instance.email]
     )
     email.attach_alternative(html_content, "text/html")
