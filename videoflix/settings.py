@@ -12,25 +12,23 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+
+# Lade die .env-Datei
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9g(ag%6g7vssg%ddqb#f$g0+a#_7&##sj6zcta(=-1!1pg2lg5'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['http://localhost:4200','127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,62 +79,35 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'videoflix.wsgi.application'
 
-
-# AUTH_USER_MODEL
 AUTH_USER_MODEL = "accounts_app.CustomUser"
 
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('DATABASE_ENGINE'),
+        'NAME': BASE_DIR / os.getenv('DATABASE_NAME'),
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
+# Static files
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# DRF Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -144,48 +115,51 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
+# Redis Queue
 RQ_QUEUES = {
     'default': {
-        'HOST': '172.29.64.1',
-        'PORT': 6379,
-        'DB': 0,
-        'PASSWORD': 'foobared', 
-        'DEFAULT_TIMEOUT': 600,
+        'HOST': os.getenv('RQ_HOST'),
+        'PORT': int(os.getenv('RQ_PORT')),
+        'DB': int(os.getenv('RQ_DB')),
+        'PASSWORD': os.getenv('RQ_PASSWORD'),
+        'DEFAULT_TIMEOUT': int(os.getenv('RQ_DEFAULT_TIMEOUT')),
     },
-    
 }
-
 
 RQ_SHOW_ADMIN_LINK = True
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS').split(',')
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
-]
-
-
+# Caching
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379/1",
+        "BACKEND": os.getenv("CACHE_BACKEND"),
+        "LOCATION": os.getenv("CACHE_LOCATION"),
         "OPTIONS": {
-            "PASSWORD":'foobared' ,
+            "PASSWORD": os.getenv("CACHE_PASSWORD"),
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
-            },
-        "KEY_PREFIX": "videoflix",
+        },
+        "KEY_PREFIX": os.getenv("CACHE_KEY_PREFIX"),
     }
 }
-
-CACHE_TTL = 30 * 60
+CACHE_TTL = int(os.getenv("CACHE_TTL"))
 
 # Django Debug Tool
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+INTERNAL_IPS = ["127.0.0.1"]
+
+# JWT Configuration
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('SIMPLE_JWT_ACCESS_TOKEN_LIFETIME'))),
+    'REFRESH_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('SIMPLE_JWT_REFRESH_TOKEN_LIFETIME'))),
 }
 
-# media folder for videos
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# Media
+MEDIA_ROOT = BASE_DIR / os.getenv("MEDIA_ROOT")
+MEDIA_URL = os.getenv("MEDIA_URL")
+
+# Email Configuration
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+# EMAIL_HOST = os.getenv("EMAIL_HOST")
+# EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+# EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") == 'True'
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
